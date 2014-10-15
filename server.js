@@ -1,10 +1,18 @@
-var http = require('http');
+var http = require("http");
+var url = require("url");
 
-var server = http.createServer(function(req, res) {
-    res.writeHead(200);
-    res.end('Hello word');
-});
+var static = require('node-static');
 
-server.listen(3000, function() {
-	console.log('Server listening on port 3000');
-});
+var file = new static.Server('./public');
+
+exports.start = function(route, handle) {
+	http.createServer(function(request, response) {
+		request.addListener('end', function () {
+			file.serve(request, response);
+	        var pathname = url.parse(request.url).pathname;
+			route(request, response, handle, pathname);
+	    }).resume();
+	}).listen(3000, function() {
+		console.log('Server listening on port 3000');
+	});
+}
