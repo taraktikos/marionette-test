@@ -6,7 +6,8 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 
     	events: {
             "click": "highlightName",
-    		"click button.js-delete": "deleteClicked"
+            "click button.js-delete": "deleteClicked",
+    		"click a.js-show": "showClicked"
     	},
 
     	highlightName: function() {
@@ -16,6 +17,12 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
         deleteClicked: function(e) {
             e.stopPropagation();
             this.trigger("contact:delete", this.model);
+        },
+
+        showClicked: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.trigger("contact:show", this.model);
         },
 
         remove: function() {
@@ -31,7 +38,13 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
         className: "table",
         template: "#contact-list",
         childView: List.Contact,
-        childViewContainer: "tbody"
+        childViewContainer: "tbody",
+
+        onChildviewContactDelete: function() {
+            this.$el.fadeOut(1000, function() {
+                $(this).fadeIn(1000);
+            });
+        }
     });
 
 });
