@@ -5,12 +5,25 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
     	template: "#contact-list-item",
 
     	events: {
-    		"click": "highlightName"
+            "click": "highlightName",
+    		"click button.js-delete": "deleteClicked"
     	},
 
     	highlightName: function() {
     		this.$el.toggleClass("warning");
-    	}
+    	},
+
+        deleteClicked: function(e) {
+            e.stopPropagation();
+            this.trigger("contact:delete", this.model);
+        },
+
+        remove: function() {
+            var self = this;
+            this.$el.fadeOut(function() {
+                Backbone.Marionette.ItemView.prototype.remove.call(self);
+            });
+        }
     });
 
     List.Contacts = Marionette.CompositeView.extend({
