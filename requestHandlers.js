@@ -61,6 +61,26 @@ function show(request, response) {
   });
 }
 
+function contacts(request, response) {
+  response.writeHead(200, { 'Content-Type': 'application/json' });
+  response.write(JSON.stringify([
+          {
+            id: 1,
+              firstName: "Bob",
+              lastName: "test",
+              phoneNumber: "44 44 44"
+          },
+          {
+            id: 2,
+              firstName: "Aob2",
+              lastName: "test2",
+              phoneNumber: "442 44 44"
+          }
+        ]));
+  response.end();
+}
+
 exports.start = start;
 exports.upload = upload;
 exports.show = show;
+exports.contacts = contacts;
