@@ -15,7 +15,7 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
 	var API = {
 		getContactEntities: function() {
 			var contacts = new Entities.ContactCollection();
-			contacts.fetch();
+			contacts.fetch({async:false});
 			return contacts;
 		},
 
