@@ -80,7 +80,26 @@ function contacts(request, response) {
   response.end();
 }
 
+function contact(request, response, id) {
+  response.writeHead(200, { 'Content-Type': 'application/json' });
+  if (request.method == "GET") {
+    response.write(JSON.stringify({
+              id: 2,
+              firstName: "Bob",
+              lastName: "test",
+              phoneNumber: "44 44 44"
+          }));
+  } else if (request.method == "DELETE") {
+    response.write(JSON.stringify({
+              id: 2,
+              status: "success"
+          }));
+  }
+  response.end();
+}
+
 exports.start = start;
 exports.upload = upload;
 exports.show = show;
 exports.contacts = contacts;
+exports.contact = contact;
