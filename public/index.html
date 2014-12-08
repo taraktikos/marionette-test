@@ -46,6 +46,7 @@
     <td><%= lastName %></td>
     <td>
     <a href="#contacts/<%= id %>" class="btn btn-xs btn-default js-show"><i class="glyphicon glyphicon-eye-open"></i></a>
+    <a href="#contacts/<%= id %>/edit" class="btn btn-xs btn-default js-edit"><i class="glyphicon glyphicon-pencil"></i></a>
     <button class="btn btn-xs btn-danger js-delete"><i class="glyphicon glyphicon-remove"></i></button>
     </td>
     </script>
@@ -59,6 +60,7 @@
     <script type="text/template" id="contact-view">
         <h1><%= firstName %> <%= lastName %></h1>
         <p><strong>Phone number:</strong> <%= phoneNumber %></p>
+        <a href="#contacts/<%= id %>/edit" class="btn btn-xs btn-default js-edit"><i class="glyphicon glyphicon-pencil"></i></a>
     </script>
     <script type="text/template" id="missing-contact-view">
     <div class="alert alert-danger">This contact does not exist!</div>
@@ -67,6 +69,32 @@
         <h1><%= title %></h1>
         <p><%= message %></p>
         <div id="spinner"></div>
+    </script>
+    <script type="text/template" id="contact-form">
+        <h1>Edit <%= firstName %> <%= lastName %></h1>
+        <form role="form" class="form-horizontal">
+            <div class="form-group">
+                <label for="contact-firstName" class="col-sm-2 control-label">First name:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="contact-firstName" name="firstName" type="text" value="<%= firstName %>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-lastName" class="col-sm-2 control-label">Last name:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="contact-lastName" name="lastName" type="text" value="<%= lastName %>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-phoneNumber" class="col-sm-2 control-label">Phone number:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="contact-phoneNumber" name="phoneNumber" type="text" value="<%= phoneNumber %>"/>
+                </div>
+            </div>
+            <div class="col-sm-offset-2">
+                <button class="btn btn-primary js-submit">Save</button>
+            </div>
+        </form>
     </script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
@@ -86,6 +114,8 @@
     <script src="./js/apps/contacts/list/list_controller.js"></script>
     <script src="./js/apps/contacts/show/show_view.js"></script>
     <script src="./js/apps/contacts/show/show_controller.js"></script>
+    <script src="./js/apps/contacts/edit/edit_view.js"></script>
+    <script src="./js/apps/contacts/edit/edit_controller.js"></script>
 
     <script type="text/javascript">
         ContactManager.start();
