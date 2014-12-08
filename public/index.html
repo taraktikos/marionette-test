@@ -10,7 +10,8 @@
 
     <title>To do list</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./assets/css/style.css">
   </head>
 
   <body>
@@ -37,9 +38,7 @@
 	</nav>
 
     <div id="content" class="container">
-      <div class="jumbotron">
-        <input class="form-control input-lg" type="text" placeholder="Type your task">
-      </div>
+
     </div>
 
     <script type="text/template" id="contact-list-item">
@@ -64,16 +63,24 @@
     <script type="text/template" id="missing-contact-view">
     <div class="alert alert-danger">This contact does not exist!</div>
     </script>
+    <script type="text/template" id="loading-view">
+        <h1><%= title %></h1>
+        <p><%= message %></p>
+        <div id="spinner"></div>
+    </script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src="./assets/js/vendor/spin.min.js"></script>
+    <script src="./assets/js/vendor/jquery.spin.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <script src="./js/app.js"></script>
     <script src="./js/entities/contact.js"></script>
+    <script src="./js/common/views.js"></script>
     <script src="./js/apps/contacts/contacts_app.js"></script>
     <script src="./js/apps/contacts/list/list_view.js"></script>
     <script src="./js/apps/contacts/list/list_controller.js"></script>
