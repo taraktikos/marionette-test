@@ -94,6 +94,11 @@ function contact(request, response, id) {
               id: 2,
               status: "success"
           }));
+  } else if (request.method == "PUT") {
+    response.write(JSON.stringify({
+              id: 2,
+              status: "success"
+          }));
   }
   response.end();
 }
