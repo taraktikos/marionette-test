@@ -89,18 +89,21 @@ function contact(request, response, id) {
               lastName: "test",
               phoneNumber: "44 44 44"
           }));
+    response.end();
   } else if (request.method == "DELETE") {
     response.write(JSON.stringify({
               id: 2,
               status: "success"
           }));
+    response.end();
   } else if (request.method == "PUT") {
-    response.write(JSON.stringify({
-              id: 2,
-              status: "success"
-          }));
+    var form = new formidable.IncomingForm();
+    form.parse(request, function (err, fields) {
+        response.write(JSON.stringify(fields));
+        response.end();
+    });
   }
-  response.end();
+  
 }
 
 exports.start = start;
