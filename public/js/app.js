@@ -1,7 +1,8 @@
 var ContactManager = new Backbone.Marionette.Application();
 
 ContactManager.addRegions({
-    mainRegion: "#content"
+    mainRegion: "#content",
+    dialogRegion: "#dialog-region"
 });
 
 ContactManager.navigate = function(route, options) {

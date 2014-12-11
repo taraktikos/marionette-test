@@ -29,7 +29,13 @@ ContactManager.module("ContactsApp.Edit", function(Edit, ContactManager, Backbon
                 var $errorEl = $("<div>", {class: "alert alert-danger", text: value});
                 $controlGroup.append($errorEl).addClass("has-error");
             });
-        }
+        },
+
+        onShow: function(){
+            if(this.options.asModal){
+                this.$el.modal();
+            }
+        },
     });
 
 });
