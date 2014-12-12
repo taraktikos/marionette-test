@@ -24,14 +24,13 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="#">Contact mananger</a>
+	      <a class="navbar-brand" href="#contacts">Contact mananger</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="#contacts">Contacts</a></li>
-	        <li><a href="#">Link</a></li>
 	      </ul>
 	    </div>
 	  </div>
@@ -39,23 +38,17 @@
 
     <div id="content" class="container"></div>
     <div id="dialog-region" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-          </div>
-          <div class="modal-body">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <script type="text/template" id="contact-list-item">
+  <script type="text/template" id="contact-list-layout">
+      <div id="panel-region"></div>
+      <div id="contacts-region"></div>
+  </script>
+  <script type="text/template" id="contact-list-panel">
+      <button class="btn btn-primary js-new"><i class="glyphicon glyphicon-plus"></i> New contact</button>
+  </script>
+
+  <script type="text/template" id="contact-list-item">
     <td><%= firstName %></td>
     <td><%= lastName %></td>
     <td>
@@ -66,7 +59,7 @@
     </script>
     <script type="text/template" id="contact-list">
     <thead>
-        <tr><th>First Name</th><th>Last Name</th><th></th></tr>
+        <tr><th>First Name</th><th>Last Name</th><th>Actions</th></tr>
     </thead>
     <tbody>
     </tbody>
@@ -85,7 +78,6 @@
         <div id="spinner"></div>
     </script>
     <script type="text/template" id="contact-form">
-        <h1>Edit <%= firstName %> <%= lastName %></h1>
         <form role="form" class="form-horizontal">
             <div class="form-group">
                 <label for="contact-firstName" class="col-sm-2 control-label">First name:</label>
@@ -125,12 +117,14 @@
     <script src="./js/entities/contact.js"></script>
     <script src="./js/common/views.js"></script>
     <script src="./js/apps/contacts/contacts_app.js"></script>
+    <script src="./js/apps/contacts/common/views.js"></script>
     <script src="./js/apps/contacts/list/list_view.js"></script>
     <script src="./js/apps/contacts/list/list_controller.js"></script>
     <script src="./js/apps/contacts/show/show_view.js"></script>
     <script src="./js/apps/contacts/show/show_controller.js"></script>
     <script src="./js/apps/contacts/edit/edit_view.js"></script>
     <script src="./js/apps/contacts/edit/edit_controller.js"></script>
+    <script src="./js/apps/contacts/new/new_view.js"></script>
 
     <script type="text/javascript">
         ContactManager.start();

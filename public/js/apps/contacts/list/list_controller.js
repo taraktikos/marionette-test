@@ -6,6 +6,9 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 
 			var contacts = ContactManager.request("contact:entities");
 
+			var contactsListLayout = new List.Layout();
+			var contactsListPanel = new List.Panel();
+
 	        var contactsListView = new List.Contacts({
 	            collection: contacts
 	        });
@@ -19,11 +22,38 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 	        });
 
 	        contactsListView.on("childview:contact:edit", function(childView, model){
-				var view = new ContactManager.ContactsApp.Edit.Contact({model: model, asModal: true});
-				ContactManager.dialogRegion.show(view);
+				ContactManager.trigger("contact:edit", model.get("id"));
 			});
-	        
-			ContactManager.mainRegion.show(contactsListView);
+
+			contactsListLayout.on("show", function() {
+				contactsListLayout.panelRegion.show(contactsListPanel);
+				contactsListLayout.contactsRegion.show(contactsListView);
+			});
+
+			contactsListPanel.on("contact:new", function(){
+				var newContact = new ContactManager.Entities.Contact();
+				var view = new ContactManager.ContactsApp.New.Contact({
+					model: newContact
+				});
+				view.on("form:submit", function(data){
+					var highestId = contacts.max(function(c){
+						return c.id;
+					});
+					highestId = highestId.get("id");
+					data.id = highestId + 1;
+					if(newContact.save(data)){
+						contacts.add(newContact);
+						//ContactManager.dialogRegion.close();
+						ContactManager.trigger("contacts:list");
+						contactsListView.children.findByModel(newContact).flash("success");
+					} else {
+						view.triggerMethod("form:data:invalid", newContact.validationError);
+					}
+				});
+				ContactManager.mainRegion.show(view);
+			});
+
+			ContactManager.mainRegion.show(contactsListLayout);
 		}
 	}
 });
