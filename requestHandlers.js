@@ -1,6 +1,14 @@
 var querystring = require("querystring"),
 	fs = require("fs"),
-	formidable = require("formidable");
+	formidable = require("formidable"),
+    mysql      = require('mysql'),
+    connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : 'root',
+        database: 'book'
+    });
+connection.connect();
 
 function start(request, response) {
 	console.log("Request handler 'start' was called.");
@@ -62,45 +70,61 @@ function show(request, response) {
 }
 
 function contacts(request, response) {
-  response.writeHead(200, { 'Content-Type': 'application/json' });
-  response.write(JSON.stringify([
-          {
-            id: 1,
-              firstName: "Bob",
-              lastName: "test",
-              phoneNumber: "44 44 44"
-          },
-          {
-            id: 2,
-              firstName: "Aob2",
-              lastName: "test2",
-              phoneNumber: "442 44 44"
-          }
-        ]));
-  response.end();
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    if (request.method == "GET") {
+        connection.query('SELECT * FROM book', function (err, rows, fields) {
+            if (err) throw err;
+            var result = [];
+            rows.forEach(function (value, key) {
+                result.push(value);
+            });
+
+            response.write(JSON.stringify(result));
+            response.end();
+        });
+    } else if (request.method == "POST") {
+        var form = new formidable.IncomingForm();
+        form.parse(request, function (err, fields) {
+            connection.query('INSERT INTO book (firstName, lastName, phoneNumber) VALUES ("' + fields.firstName + '", "' + fields.lastName + '", "' + fields.phoneNumber + '")', function(err, rows) {
+                if (err) throw err;
+                fields.id = rows.insertId;
+                response.write(JSON.stringify(fields));
+                response.end();
+            });
+        });
+    }
 }
 
 function contact(request, response, id) {
   response.writeHead(200, { 'Content-Type': 'application/json' });
   if (request.method == "GET") {
-    response.write(JSON.stringify({
-              id: 2,
-              firstName: "Bob",
-              lastName: "test",
-              phoneNumber: "44 44 44"
-          }));
-    response.end();
+      connection.query('SELECT * FROM book WHERE id = ' + id, function(err, rows) {
+          if (err) throw err;
+          if (rows[0] != undefined) {
+              response.write(JSON.stringify(rows[0]));
+          } else {
+              response.write("404");
+          }
+          response.end();
+      });
   } else if (request.method == "DELETE") {
-    response.write(JSON.stringify({
-              id: 2,
+      connection.query('DELETE FROM book WHERE id = ' + id, function(err, rows) {
+          if (err) throw err;
+          response.write(JSON.stringify({
+              id: id,
               status: "success"
           }));
-    response.end();
+          response.end();
+      });
+
   } else if (request.method == "PUT") {
     var form = new formidable.IncomingForm();
     form.parse(request, function (err, fields) {
-        response.write(JSON.stringify(fields));
-        response.end();
+        connection.query('UPDATE book SET firstName = "' + fields.firstName + '", lastName = "' + fields.lastName + '", phoneNumber = "' + fields.phoneNumber + '" WHERE id = ' + id, function(err, rows) {
+            if (err) throw err;
+            response.write(JSON.stringify(fields));
+            response.end();
+        });
     });
   }
   

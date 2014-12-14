@@ -74,9 +74,7 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
         childViewContainer: "tbody",
 
         onChildviewContactDelete: function() {
-            this.$el.fadeOut(1000, function() {
-                $(this).fadeIn(1000);
-            });
+
         }
     });
 

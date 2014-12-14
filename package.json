@@ -9,5 +9,8 @@
     "backbone.marionette": "~2.2.1",
     "formidable": "~1.0.15",
     "node-static": "~0.7.6"
+  },
+  "dependencies": {
+    "mysql": "^2.5.3"
   }
 }
