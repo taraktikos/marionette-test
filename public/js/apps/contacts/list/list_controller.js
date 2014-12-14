@@ -13,6 +13,11 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 	            collection: contacts
 	        });
 
+			contactsListPanel.on("contacts:filter", function(filterCriterion){
+				filteredContacts.filter(filterCriterion);
+				ContactManager.trigger("contacts:filter", filterCriterion);
+			});
+
 	        contactsListView.on("childview:contact:delete", function(childView, model) {
 	        	model.destroy();
 	        });
