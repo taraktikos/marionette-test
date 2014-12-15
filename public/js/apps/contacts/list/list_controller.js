@@ -6,11 +6,25 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 
 			var contacts = ContactManager.request("contact:entities");
 
+			var filteredContacts = ContactManager.Entities.FilteredCollection({
+          		collection: contacts,
+          		filterFunction: function(filterCriterion){
+            		var criterion = filterCriterion.toLowerCase();
+            		return function(contact){
+              			if(contact.get("firstName").toLowerCase().indexOf(criterion) !== -1
+                		|| contact.get("lastName").toLowerCase().indexOf(criterion) !== -1
+                		|| contact.get("phoneNumber").toLowerCase().indexOf(criterion) !== -1){
+                  			return contact;
+              			}
+            		};
+            	}
+          	});
+
 			var contactsListLayout = new List.Layout();
 			var contactsListPanel = new List.Panel();
 
 	        var contactsListView = new List.Contacts({
-	            collection: contacts
+	            collection: filteredContacts
 	        });
 
 			contactsListPanel.on("contacts:filter", function(filterCriterion){

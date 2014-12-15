@@ -22,7 +22,7 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 
         filterContacts: function(e){
             e.preventDefault();
-            var criterion = this.$(".js-filter-criterion").val();
+            var criterion = this.$(".js-filter-criteria").val();
             this.trigger("contacts:filter", criterion);
         }
     });

@@ -8,9 +8,9 @@ var file = new static.Server('./public');
 
 exports.start = function(route, handle) {
 	http.createServer(function(request, response) {
-        //request.addListener('end', function () {
-			//file.serve(request, response);
-	    //}).resume();
+        request.addListener('end', function () {
+			file.serve(request, response);
+	    }).resume();
 		var pathname = url.parse(request.url).pathname;
 		route(request, response, handle, pathname);
 
