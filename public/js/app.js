@@ -1,6 +1,7 @@
 var ContactManager = new Backbone.Marionette.Application();
 
 ContactManager.addRegions({
+	headerRegion: "#header-region",
     mainRegion: "#content",
     dialogRegion: "#dialog-region"
 });
