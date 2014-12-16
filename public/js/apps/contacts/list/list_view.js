@@ -24,6 +24,10 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
             e.preventDefault();
             var criterion = this.$(".js-filter-criteria").val();
             this.trigger("contacts:filter", criterion);
+        },
+
+        onSetFilterCriterion: function(criterion){
+            this.$(".js-filter-criteria").val(criterion);
         }
     });
 
@@ -76,10 +80,17 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
         }
     });
 
+    var NoContactsView = Marionette.ItemView.extend({
+        template: "#contact-list-none",
+        tagName: "tr",
+        className: "alert alert-warning"
+    });
+
     List.Contacts = Marionette.CompositeView.extend({
         tagName: "table",
         className: "table",
         template: "#contact-list",
+        emptyView: NoContactsView,
         childView: List.Contact,
         childViewContainer: "tbody",
 

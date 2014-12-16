@@ -1,10 +1,13 @@
 ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbone, Marionette, $, _) {
 	List.Controller = {
-		listContacts: function() {
+		listContacts: function(criterion) {
 			var loadingView = new ContactManager.Common.Views.Loading();
 			ContactManager.mainRegion.show(loadingView);
 
 			var contacts = ContactManager.request("contact:entities");
+
+			var contactsListLayout = new List.Layout();
+			var contactsListPanel = new List.Panel();
 
 			var filteredContacts = ContactManager.Entities.FilteredCollection({
           		collection: contacts,
@@ -19,11 +22,14 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
             		};
             	}
           	});
+          	if (criterion) {
+          		filteredContacts.filter(criterion);
+				contactsListPanel.once("show", function(){
+					contactsListPanel.triggerMethod("set:filter:criterion", criterion);
+				});
+          	}
 
-			var contactsListLayout = new List.Layout();
-			var contactsListPanel = new List.Panel();
-
-	        var contactsListView = new List.Contacts({
+			var contactsListView = new List.Contacts({
 	            collection: filteredContacts
 	        });
 
