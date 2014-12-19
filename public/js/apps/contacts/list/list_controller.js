@@ -56,21 +56,7 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 			});
 
 			contactsListPanel.on("contact:new", function(){
-				var newContact = new ContactManager.Entities.Contact();
-				var view = new ContactManager.ContactsApp.New.Contact({
-					model: newContact
-				});
-				view.on("form:submit", function(data){
-					if(newContact.save(data)){
-						contacts.add(newContact);
-						//contactsListView.children.findByModel(newContact).flash("success");
-						//ContactManager.dialogRegion.close();
-						ContactManager.trigger("contacts:list");
-					} else {
-						view.triggerMethod("form:data:invalid", newContact.validationError);
-					}
-				});
-				ContactManager.mainRegion.show(view);
+				ContactManager.trigger("contact:create");
 			});
 
 			ContactManager.mainRegion.show(contactsListLayout);

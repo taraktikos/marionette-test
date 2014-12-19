@@ -4,6 +4,7 @@ ContactManager.module("ContactsApp", function(ContactsApp, ContactManager, Backb
         appRoutes: {
             "contacts(/filter/criterion::criterion)": "listContacts",
             "contacts": "listContacts",
+            "contacts/create": "createContact",
             "contacts/:id": "showContact",
             "contacts/:id/edit": "editContact"
         }
@@ -21,6 +22,11 @@ ContactManager.module("ContactsApp", function(ContactsApp, ContactManager, Backb
         editContact: function(id) {
             ContactsApp.Edit.Controller.editContact(id);
             ContactManager.execute("set:active:header", "contacts");
+        },
+        createContact: function() {
+            console.log('create');
+            ContactsApp.Edit.Controller.createContact();
+            ContactManager.execute("set:active:header", "contacts");
         }
     };
 
@@ -37,6 +43,11 @@ ContactManager.module("ContactsApp", function(ContactsApp, ContactManager, Backb
     ContactManager.on("contact:edit", function(id) {
         ContactManager.navigate("contacts/" + id + "/edit");
         API.editContact(id);
+    });
+
+    ContactManager.on("contact:create", function() {
+        ContactManager.navigate("contacts/create");
+        API.createContact();
     });
 
     ContactManager.on("contacts:filter", function(criterion){
